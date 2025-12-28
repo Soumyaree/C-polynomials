@@ -1,20 +1,23 @@
-# model-project
-MODEL Implementation Project (C)
+# 🚀 MODEL Project – Polynomial Multiplication Benchmark (C)
 
+This project implements and benchmarks multiple polynomial multiplication algorithms in **C**, including classical and high-performance methods. It is designed to help compare **speed and accuracy** for polynomials of various degrees.
 
-This Project contains .h files for each algorithm and main.c as main driver file to run all those algorithms.
-Algorithms Covered:
-1. Naive Classical
-2. Karatsuba
-3. Took Cook
-4. Toom - 4
-5. Naive Algorithm using MPFR library (https://www.mpfr.org/)
+---
 
-# Pre-requisits --->
+## 📚 Algorithms Covered
+1. **Naive Classical Multiplication**  
+2. **Karatsuba Multiplication**  
+3. **Toom-Cook Multiplication**  
+4. **Toom-4 Multiplication**  
+5. **Naive Multiplication using MPFR library** ([MPFR](https://www.mpfr.org/)) for high-precision computations  
 
-## To run it in mac
-```shell 
-    brew install gcc gmp mpfr
+---
+
+## 🛠️ Prerequisites
+
+### On macOS
+```bash
+brew install gcc gmp mpfr
 ```
 ## Ro run it in Debian based system / WSL
 ```shell 
