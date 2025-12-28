@@ -53,3 +53,19 @@ make
 ```bash
 make clean
 ```
+
+
+# 📈 Output
+The program prints:
+1. Input polynomials
+2. Multiplication results for all algorithms
+3. Execution time for each method
+4. Best k parameter determined from timing benchmarks
+
+# 🎯 Purpose
+This project allows you to:
+1. Compare efficiency of polynomial multiplication algorithms.
+2. Evaluate accuracy of double-precision vs. high-precision (MPFR) calculations.
+3. Understand how advanced algorithms like Karatsuba and Toom-Cook optimize large polynomial multiplications.
+
+
