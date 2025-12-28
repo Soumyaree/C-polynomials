@@ -25,13 +25,27 @@ brew install gcc gmp mpfr
 apt install build-essential libgmp-dev libmpfr-dev
 ```
 
-# Now the next step (Build and RUN) ---->
-```shell
-    make
-    ./make.exe
-    # please note:
-    # the '.exe' file extention is just a name of the file which is executable;
-    # it has nothing to do with DOS operated systems like Windows. You can execute this file from Unix based systems as well.
+## ⚡ Procedure / How It Works
+
+1. Prepare Polynomials:
+    Define your polynomials in main.c. Example polynomials are already provided.
+
+2. Run the Algorithms:
+    main.c is the driver that runs all algorithms on the defined polynomials. Each algorithm is implemented in its respective .h file.
+
+3. Benchmark and Compare:
+    Execution time is measured for each algorithm. 
+    Results are printed in a readable polynomial format.
+    High-precision results are computed with the MPFR library for comparison.
+
+4. Adjust Parameters:
+    For Karatsuba, Toom-Cook, and Toom-4, adjust the k parameter to see its impact on performance.
+
+
+# 🏗️ Build and Run
+```bash
+make
+./make.exe
 ```
 
 
