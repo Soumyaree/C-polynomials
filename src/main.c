@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 #include "naive.h"
 #include "karatsuba.h"
 #include "toom_cook.h"
