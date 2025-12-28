@@ -31,71 +31,26 @@ void print_polynomial(double *poly, int degree) {
     printf("\n");
 }
 
-void run_algorithm(double* A, int degA, double* B, int degB, 
-                   double* (*multiplication_func)(double*, int, double*, int, int), 
-                   const char* algorithm_name, int k) {
-    clock_t start, end;
-    double cpu_time_used;
+// Run double-precision algorithm
+double* run_algorithm_double(double *A, int degA, double *B, int degB,
+                             double* (*func)(double*, int, double*, int, int),
+                             const char* name, int k) {
+    clock_t start = clock();
+    double *C = func(A, degA, B, degB, k);
+    clock_t end = clock();
+    double time_sec = (double)(end - start) / CLOCKS_PER_SEC;
 
-    printf("%s", algorithm_name);
-    printf("\n");
-    if (k > 0) printf("For k = %d\n", k);
-    start = clock();
-    double *result = multiplication_func(A, degA, B, degB, k);
-    end = clock();
-    printf("Result: ");
-    print_polynomial(result, degA + degB);
-    cpu_time_used = (double)(end - start) / CLOCKS_PER_SEC;
-    printf("Time taken: %.8f seconds\n", cpu_time_used);
-    free(result);
-    printf("\n");
+    printf("%s", name);
+    if (k > 0) printf(" (k=%d)", k);
+    printf("\nResult: ");
+    print_polynomial(C, degA + degB);
+    printf("Time: %.8f seconds\n\n", time_sec);
+
+    return C;
 }
 
-int main() {
-    printf("MODEL Project\n");
-
-    // defining variables
-    double A[] = {0.5, 1, 4, 4, 1};
-    int degA = 4;
-    double B[] = {1, 3, 2.5, 1, 3};
-    int degB = 4;
-    
-    // printing polynomials
-    printf("Polynomials:\nA(x) = ");
-    print_polynomial(A, degA);
-    printf("B(x) = ");
-    print_polynomial(B, degB);
-    printf("\n");
-
-    // Naive Polynomial Multiplication
-    run_algorithm(A, degA, B, degB, naive_polynomial_multiplication, "Naive Polynomial Multiplication", 0);
-
-
-    // Karatsuba Polynomial Multiplication
-    for (int k = 2; k <= 4; k++) {
-        run_algorithm(A, degA, B, degB, karatsuba_polynomial_multiplication, "Karatsuba Polynomial Multiplication", k);
-    }
-
-    printf("\n");
-
-    // Toom-Cook Polynomial Multiplication
-    for (int k = 2; k <= 4; k++) {
-        run_algorithm(A, degA, B, degB, toom_cook_polynomial_multiplication, "Toom-Cook Polynomial Multiplication", k);
-    }
-
-    printf("\n");
-
-    // Toom-4 Polynomial Multiplication
-    for (int k = 2; k <= 4; k++) {
-        run_algorithm(A, degA, B, degB, toom_4_polynomial_multiplication, "Toom-4 Polynomial Multiplication", k);
-    }
-
-    // Naive MPFR Multiplication
-    printf("Naive MPFR Multiplication\n");
-    mpfr_prec_t precision = 256;
-    clock_t start, end;
-    double cpu_time_used;
-
+// Run MPFR algorithm
+void run_algorithm_mpfr(double *A, int degA, double *B, int degB, mpfr_prec_t precision) {
     mpfr_t *mpfr_A = init_mpfr_polynomial(degA, A, precision);
     mpfr_t *mpfr_B = init_mpfr_polynomial(degB, B, precision);
 
