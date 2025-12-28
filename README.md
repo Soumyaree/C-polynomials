@@ -19,9 +19,10 @@ This project implements and benchmarks multiple polynomial multiplication algori
 ```bash
 brew install gcc gmp mpfr
 ```
-## Ro run it in Debian based system / WSL
-```shell 
-    apt install build-essential libgmp-dev libmpfr-dev
+
+## On Debian-based systems / WSL
+```bash
+apt install build-essential libgmp-dev libmpfr-dev
 ```
 
 # Now the next step (Build and RUN) ---->
