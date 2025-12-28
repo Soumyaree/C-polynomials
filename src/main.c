@@ -7,12 +7,23 @@
 #include "toom_4.h"
 #include "naive_mpfr.h"
 
-void print_polynomial(double*polynomial,  int degree) {
+// Generate a random double in [-1,1]
+double rand_double() {
+    return ((double)rand() / RAND_MAX) * 2.0 - 1.0;
+}
+
+// Generate random polynomial
+void random_poly(double *poly, int degree) {
+    for (int i = 0; i <= degree; i++) {
+        poly[i] = rand_double();
+    }
+}
+
+// Print polynomial
+void print_polynomial(double *poly, int degree) {
     for (int i = degree; i >= 0; i--) {
-        // print decimals only if necessary
-        if (polynomial[i] != 1 || i == 0) {
-            polynomial[i] != (int)polynomial[i] ? printf("%.2f", polynomial[i]) : printf("%.0f", polynomial[i]);
-        }
+        if (poly[i] != 1 || i == 0)
+            poly[i] != (int)poly[i] ? printf("%.2f", poly[i]) : printf("%.0f", poly[i]);
         if (i > 1) printf("x^%d", i);
         else if (i == 1) printf("x");
         if (i > 0) printf(" + ");
