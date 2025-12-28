@@ -34,8 +34,8 @@ apt install build-essential libgmp-dev libmpfr-dev
     # it has nothing to do with DOS operated systems like Windows. You can execute this file from Unix based systems as well.
 ```
 
-## clean main (optional)
-<!-- If you want to clean the main you use this -->
-```shell
-    make clean
+
+# 🧹 Clean (Optional)
+```bash
+make clean
 ```
