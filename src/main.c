@@ -62,17 +62,20 @@ double max_absolute_error(double *dbl, mpfr_t *mpfr, int degree) {
 }
 
 
+void benchmark_algorithm(const char *name, double* (*func)(double*, int, double*, int, int), double *A, double *B, int deg, int k, mpfr_t *mpfr_ref)
+{
     clock_t start = clock();
-    mpfr_t *mpfr_C = naive_mpfr_multiplication(mpfr_A, degA + 1, mpfr_B, degB + 1);
+    double *C = func(A, deg, B, deg, k);
     clock_t end = clock();
 
-    printf("Naive MPFR Multiplication\nResult: ");
-    print_mpfr_polynomial(mpfr_C, degA + degB);
     double time_sec = (double)(end - start) / CLOCKS_PER_SEC;
-    printf("Time: %.8f seconds\n\n", time_sec);
+    double error = max_absolute_error(C, mpfr_ref, 2 * deg);
 
-    free_mpfr_polynomials(mpfr_A, degA, mpfr_B, degB, mpfr_C, degA + degB);
+    printf("%-12s (k=%d) | time = %.6f s | max error = %.3e\n", name, k, time_sec, error);
+
+    free(C);
 }
+
 
 int main() {
     srand(time(NULL));
