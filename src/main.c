@@ -32,8 +32,8 @@ void print_polynomial(double *poly, int degree) {
     printf("\n");
 }
 
-// Run double-precision algorithm
-double* run_algorithm_double(double *A, int degA, double *B, int degB,
+
+mpfr_t *mpfr_reference(double *A, int degA, double *B, int degB,
                              double* (*func)(double*, int, double*, int, int),
                              const char* name, int k) {
     clock_t start = clock();
