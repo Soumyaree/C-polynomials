@@ -110,9 +110,8 @@ int main(void) {
 
         /* Cleanup */
         for (int j = 0; j <= 2 * deg; j++)
-            mpfr_clear(mpfr_C[j]);
-
-        free(mpfr_C);
+            mpfr_clear(mpfr_ref[j]);
+        free(mpfr_ref);
         free(A);
         free(B);
 
