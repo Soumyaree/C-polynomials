@@ -10,25 +10,22 @@
 #include "toom_4.h"
 #include "naive_mpfr.h"
 // Generate a random double in [-1,1]
-double rand_double() {
-    return ((double)rand() / RAND_MAX) * 2.0 - 1.0;
+double random_double() {
+    return 2.0 * rand() / RAND_MAX - 1.0;
 }
-
 // Generate random polynomial
-void random_poly(double *poly, int degree) {
-    for (int i = 0; i <= degree; i++) {
-        poly[i] = rand_double();
-    }
+double *random_polynomial(int degree) {
+    double *p = malloc((degree + 1) * sizeof(double));
+    for (int i = 0; i <= degree; i++)
+        p[i] = random_double();
+    return p;
 }
-
 // Print polynomial
-void print_polynomial(double *poly, int degree) {
+void print_polynomial(double *p, int degree) {
     for (int i = degree; i >= 0; i--) {
-        if (poly[i] != 1 || i == 0)
-            poly[i] != (int)poly[i] ? printf("%.2f", poly[i]) : printf("%.0f", poly[i]);
-        if (i > 1) printf("x^%d", i);
-        else if (i == 1) printf("x");
-        if (i > 0) printf(" + ");
+        printf("%.3f", p[i]);
+        if (i > 1) printf("x^%d + ", i);
+        else if (i == 1) printf("x + ");
     }
     printf("\n");
 }
