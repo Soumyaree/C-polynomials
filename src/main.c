@@ -33,27 +33,34 @@ void print_polynomial(double *poly, int degree) {
 }
 
 
-mpfr_t *mpfr_reference(double *A, int degA, double *B, int degB,
-                             double* (*func)(double*, int, double*, int, int),
-                             const char* name, int k) {
-    clock_t start = clock();
-    double *C = func(A, degA, B, degB, k);
-    clock_t end = clock();
-    double time_sec = (double)(end - start) / CLOCKS_PER_SEC;
+mpfr_t *mpfr_reference(double *A, int degA,double *B, int degB,mpfr_prec_t prec)
+{
+    mpfr_t *mpfr_A = init_mpfr_polynomial(degA, A, prec);
+    mpfr_t *mpfr_B = init_mpfr_polynomial(degB, B, prec);
 
-    printf("%s", name);
-    if (k > 0) printf(" (k=%d)", k);
-    printf("\nResult: ");
-    print_polynomial(C, degA + degB);
-    printf("Time: %.8f seconds\n\n", time_sec);
+    mpfr_t *mpfr_C =
+        naive_mpfr_multiplication(mpfr_A, degA + 1,
+                                  mpfr_B, degB + 1);
 
-    return C;
+    for (int i = 0; i <= degA; i++) mpfr_clear(mpfr_A[i]);
+    for (int i = 0; i <= degB; i++) mpfr_clear(mpfr_B[i]);
+    free(mpfr_A);
+    free(mpfr_B);
+
+    return mpfr_C;
 }
 
-// Run MPFR algorithm
-void run_algorithm_mpfr(double *A, int degA, double *B, int degB, mpfr_prec_t precision) {
-    mpfr_t *mpfr_A = init_mpfr_polynomial(degA, A, precision);
-    mpfr_t *mpfr_B = init_mpfr_polynomial(degB, B, precision);
+
+double max_absolute_error(double *dbl, mpfr_t *mpfr, int degree) {
+    double max_err = 0.0;
+    for (int i = 0; i <= degree; i++) {
+        double ref = mpfr_get_d(mpfr[i], MPFR_RNDN);
+        double err = fabs(dbl[i] - ref);
+        if (err > max_err) max_err = err;
+    }
+    return max_err;
+}
+
 
     clock_t start = clock();
     mpfr_t *mpfr_C = naive_mpfr_multiplication(mpfr_A, degA + 1, mpfr_B, degB + 1);
