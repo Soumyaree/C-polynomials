@@ -26,7 +26,7 @@ static void toom4_recursive(double* C, double* A, int n, double* B, int m, int k
     double* b1 = Bp + quarter;
     double* b2 = Bp + 2 * quarter;
     double* b3 = Bp + 3 * quarter;
-
+    
     double* p0 = (double*)calloc(quarter, sizeof(double));      // p(0) = a0
     double* p1 = (double*)calloc(quarter, sizeof(double));      // p(1) = a0 + a1 + a2 + a3
     double* pm1 = (double*)calloc(quarter, sizeof(double));     // p(-1) = a0 - a1 + a2 - a3
