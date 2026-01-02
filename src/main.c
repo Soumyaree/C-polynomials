@@ -12,7 +12,7 @@
 static double random_double(void) {
     return 2.0 * rand() / RAND_MAX - 1.0;
 }
-// Generate random polynomial
+
 static double *random_polynomial(int degree) {
     double *p = malloc((degree + 1) * sizeof(double));
     if (!p) {
