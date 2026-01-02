@@ -23,83 +23,60 @@ static double *random_polynomial(int degree) {
         p[i] = random_double();
     return p;
 }
-// Print polynomial
-void print_polynomial(double *p, int degree) {
-    for (int i = degree; i >= 0; i--) {
-        printf("%.3f", p[i]);
-        if (i > 1) printf("x^%d + ", i);
-        else if (i == 1) printf("x + ");
-    }
-    printf("\n");
-}
 
 
-mpfr_t *mpfr_reference(double *A, int degA,double *B, int degB,mpfr_prec_t prec)
-{
-    mpfr_t *mpfr_A = init_mpfr_polynomial(degA, A, prec);
-    mpfr_t *mpfr_B = init_mpfr_polynomial(degB, B, prec);
-
-    mpfr_t *mpfr_C =
-        naive_mpfr_multiplication(mpfr_A, degA + 1,
-                                  mpfr_B, degB + 1);
-
-    for (int i = 0; i <= degA; i++) mpfr_clear(mpfr_A[i]);
-    for (int i = 0; i <= degB; i++) mpfr_clear(mpfr_B[i]);
-    free(mpfr_A);
-    free(mpfr_B);
-
-    return mpfr_C;
-}
-
-
-double max_absolute_error(double *dbl, mpfr_t *mpfr, int degree) {
-    double max_err = 0.0;
-    for (int i = 0; i <= degree; i++) {
-        double ref = mpfr_get_d(mpfr[i], MPFR_RNDN);
-        double err = fabs(dbl[i] - ref);
-        if (err > max_err) max_err = err;
-    }
-    return max_err;
-}
-
-
-void benchmark_algorithm(const char *name, double* (*func)(double*, int, double*, int, int), double *A, double *B, int deg, int k, mpfr_t *mpfr_ref)
-{
+static void benchmark_algorithm(
+    const char *name,
+    double *(*func)(double *, int, double *, int, int),
+    double *A, double *B,
+    int degree, int k,
+    mpfr_t *mpfr_ref
+) {
     clock_t start = clock();
-    double *C = func(A, deg, B, deg, k);
+    double *C = func(A, degree, B, degree, k);
     clock_t end = clock();
 
     double time_sec = (double)(end - start) / CLOCKS_PER_SEC;
-    double error = max_absolute_error(C, mpfr_ref, 2 * deg);
+    double error = max_absolute_error(C, mpfr_ref, 2 * degree);
 
     printf("%-12s (k=%d) | time = %.6f s | max error = %.3e\n", name, k, time_sec, error);
 
     free(C);
 }
 
+int main(void) {
+    srand((unsigned)time(NULL));
 
-int main() {
-    srand(time(NULL));
+    /* MPFR reference precision */
     mpfr_prec_t precision = 256;
 
+    /* Polynomial degrees to test */
     int degrees[] = {8, 16, 32, 64};
-    int n = sizeof(degrees) / sizeof(degrees[0]);
+    int num_degrees = sizeof(degrees) / sizeof(degrees[0]);
 
-    printf("\nPolynomial Multiplication Accuracy Benchmark\n");
-    printf("MPFR precision: %lu bits\n\n", precision);
+    printf("\nPolynomial Multiplication Benchmark\n");
+    printf("MPFR reference precision: %lu bits\n\n", precision);
 
-    for (int i = 0; i < n; i++) {
+    for (int i = 0; i < num_degrees; i++) {
         int deg = degrees[i];
 
+        /* Generate random polynomials */
         double *A = random_polynomial(deg);
         double *B = random_polynomial(deg);
 
-        mpfr_t *mpfr_C = mpfr_reference(A, deg, B, deg, precision);
+        /* Computing MPFR reference once */
+        mpfr_t *mpfr_ref = mpfr_reference(A, deg, B, deg, precision);
 
         printf("Degree %d\n", deg);
         printf("--------------------------------------------\n");
 
-        benchmark_algorithm("Naive", naive_polynomial_multiplication, A, B, deg, 0, mpfr_C);
+        /* Naive */
+        benchmark_algorithm(
+            "Naive",
+            naive_polynomial_multiplication,
+            A, B, deg, 0,
+            mpfr_ref
+        );
 
         for (int k = 2; k <= 4; k++)
             benchmark_algorithm("Karatsuba", karatsuba_polynomial_multiplication, A, B, deg, k, mpfr_C);
