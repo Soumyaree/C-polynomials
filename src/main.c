@@ -2,12 +2,13 @@
 #include <stdlib.h>
 #include <time.h>
 #include <math.h>
+#include <mpfr.h>
+
 #include "naive.h"
 #include "karatsuba.h"
 #include "toom_cook.h"
 #include "toom_4.h"
 #include "naive_mpfr.h"
-
 // Generate a random double in [-1,1]
 double rand_double() {
     return ((double)rand() / RAND_MAX) * 2.0 - 1.0;
@@ -79,61 +80,44 @@ void benchmark_algorithm(const char *name, double* (*func)(double*, int, double*
 
 int main() {
     srand(time(NULL));
-    printf("MODEL Project - Polynomial Multiplication Benchmark\n\n");
+    mpfr_prec_t precision = 256;
 
-    int sizes[] = {8, 16, 32};
-    int num_sizes = sizeof(sizes)/sizeof(sizes[0]);
-    mpfr_prec_t mpfr_precision = 256;
+    int degrees[] = {8, 16, 32, 64};
+    int n = sizeof(degrees) / sizeof(degrees[0]);
 
-    for (int s = 0; s < num_sizes; s++) {
-        int degA = sizes[s];
-        int degB = sizes[s];
+    printf("\nPolynomial Multiplication Accuracy Benchmark\n");
+    printf("MPFR precision: %lu bits\n\n", precision);
 
-        double *A = malloc((degA + 1) * sizeof(double));
-        double *B = malloc((degB + 1) * sizeof(double));
-        random_poly(A, degA);
-        random_poly(B, degB);
+    for (int i = 0; i < n; i++) {
+        int deg = degrees[i];
 
-        printf("Testing polynomials of degree %d and %d\n", degA, degB);
-        printf("A(x) = "); print_polynomial(A, degA);
-        printf("B(x) = "); print_polynomial(B, degB);
-        printf("\n");
+        double *A = random_polynomial(deg);
+        double *B = random_polynomial(deg);
 
-        // Naive
-        double *C_naive = run_algorithm_double(A, degA, B, degB, naive_polynomial_multiplication, "Naive Double-Precision Multiplication", 0);
-        free(C_naive);
+        mpfr_t *mpfr_C = mpfr_reference(A, deg, B, deg, precision);
 
-        // Karatsuba best k
-        int best_k = 2;
-        double best_time = 1e9;
-        for (int k = 2; k <= 4; k++) {
-            double *C = run_algorithm_double(A, degA, B, degB, karatsuba_polynomial_multiplication, "Karatsuba Polynomial Multiplication", k);
-            double t = (double)clock() / CLOCKS_PER_SEC; // approximation
-            free(C);
-        }
-        printf("Best k for Karatsuba determined from above timings\n\n");
+        printf("Degree %d\n", deg);
+        printf("--------------------------------------------\n");
 
-        // Toom-Cook best k
-        for (int k = 2; k <= 4; k++) {
-            double *C = run_algorithm_double(A, degA, B, degB, toom_cook_polynomial_multiplication, "Toom-Cook Polynomial Multiplication", k);
-            free(C);
-        }
-        printf("Best k for Toom-Cook determined from above timings\n\n");
+        benchmark_algorithm("Naive", naive_polynomial_multiplication, A, B, deg, 0, mpfr_C);
 
-        // Toom-4 best k
-        for (int k = 2; k <= 4; k++) {
-            double *C = run_algorithm_double(A, degA, B, degB, toom_4_polynomial_multiplication, "Toom-4 Polynomial Multiplication", k);
-            free(C);
-        }
-        printf("Best k for Toom-4 determined from above timings\n\n");
+        for (int k = 2; k <= 4; k++)
+            benchmark_algorithm("Karatsuba", karatsuba_polynomial_multiplication, A, B, deg, k, mpfr_C);
 
-        // MPFR naive
-        run_algorithm_mpfr(A, degA, B, degB, mpfr_precision);
+        for (int k = 2; k <= 4; k++)
+            benchmark_algorithm("Toom-Cook", toom_cook_polynomial_multiplication, A, B, deg, k, mpfr_C);
 
+        for (int k = 2; k <= 4; k++)
+            benchmark_algorithm("Toom-4", toom_4_polynomial_multiplication, A, B, deg, k, mpfr_C);
+
+        for (int j = 0; j <= 2 * deg; j++)
+            mpfr_clear(mpfr_C[j]);
+
+        free(mpfr_C);
         free(A);
         free(B);
 
-        printf("------------------------------------------------------------\n\n");
+        printf("\n");
     }
 
     return 0;
