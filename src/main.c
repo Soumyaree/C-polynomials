@@ -1,21 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <math.h>
-#include <mpfr.h>
 
 #include "naive.h"
 #include "karatsuba.h"
 #include "toom_cook.h"
 #include "toom_4.h"
-#include "naive_mpfr.h"
+#include "mpfr_compare.h"
+
 // Generate a random double in [-1,1]
-double random_double() {
+static double random_double(void) {
     return 2.0 * rand() / RAND_MAX - 1.0;
 }
 // Generate random polynomial
-double *random_polynomial(int degree) {
+static double *random_polynomial(int degree) {
     double *p = malloc((degree + 1) * sizeof(double));
+    if (!p) {
+        perror("malloc");
+        exit(EXIT_FAILURE);
+    }
     for (int i = 0; i <= degree; i++)
         p[i] = random_double();
     return p;
