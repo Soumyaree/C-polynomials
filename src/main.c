@@ -78,15 +78,37 @@ int main(void) {
             mpfr_ref
         );
 
-        for (int k = 2; k <= 4; k++)
-            benchmark_algorithm("Karatsuba", karatsuba_polynomial_multiplication, A, B, deg, k, mpfr_C);
+        /* Karatsuba */
+        for (int k = 2; k <= 4; k++) {
+            benchmark_algorithm(
+                "Karatsuba",
+                karatsuba_polynomial_multiplication,
+                A, B, deg, k,
+                mpfr_ref
+            );
+        }
 
-        for (int k = 2; k <= 4; k++)
-            benchmark_algorithm("Toom-Cook", toom_cook_polynomial_multiplication, A, B, deg, k, mpfr_C);
+        /* Toom-Cook */
+        for (int k = 2; k <= 4; k++) {
+            benchmark_algorithm(
+                "Toom-Cook",
+                toom_cook_polynomial_multiplication,
+                A, B, deg, k,
+                mpfr_ref
+            );
+        }
 
-        for (int k = 2; k <= 4; k++)
-            benchmark_algorithm("Toom-4", toom_4_polynomial_multiplication, A, B, deg, k, mpfr_C);
+        /* Toom-4 */
+        for (int k = 2; k <= 4; k++) {
+            benchmark_algorithm(
+                "Toom-4",
+                toom_4_polynomial_multiplication,
+                A, B, deg, k,
+                mpfr_ref
+            );
+        }
 
+        /* Cleanup */
         for (int j = 0; j <= 2 * deg; j++)
             mpfr_clear(mpfr_C[j]);
 
