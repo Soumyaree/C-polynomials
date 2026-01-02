@@ -51,7 +51,7 @@ apt install build-essential libgmp-dev libmpfr-dev
 make
 ./make.exe
 ```
-> ⚠️ Note: **.exe** is just the executable name; it runs on Unix-based systems as well.
+> ⚠️ Note: **.exe** is just the executable name; it runs on all systems.
 
 # 🧹 Clean (Optional)
 ```bash
