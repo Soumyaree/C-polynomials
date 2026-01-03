@@ -25,11 +25,9 @@ apt install build-essential libgmp-dev libmpfr-dev
 
 ## Procedure / How It Works
 
-1. Prepare Polynomials:
-    Random or predefined polynomials are generated. Polynomials are stored in double precision.
+1. Random or predefined polynomials are generated. Polynomials are stored in double precision.
 
-2. Run the Algorithms:
-    main.c is the driver. Each multiplication algorithm is implemented in its respective .c / .h file.
+2. main.c is the driver. Each multiplication algorithm is implemented in its respective .c / .h file.
 
 3. High-Precision Comparison:
     MPFR-based naive multiplication is called via a dedicated MPFR module.
