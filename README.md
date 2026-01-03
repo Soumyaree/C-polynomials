@@ -1,10 +1,10 @@
-# MODEL Project – Polynomial Multiplication Benchmark (C)
+# 🚀 MODEL Project – Polynomial Multiplication Benchmark (C)
 
 This project implements and benchmarks multiple polynomial multiplication algorithms in **C**, including classical and high-performance methods. It allows comparison of **speed and accuracy** for polynomials of various degrees and provides **MPFR-based high-precision results** as a reference.
 
 ---
 
-## Algorithms Covered
+## 📚 Algorithms Covered
 1. **Naive Classical Multiplication**  
 2. **Karatsuba Multiplication**  
 3. **Toom-Cook Multiplication**  
@@ -15,7 +15,7 @@ This project implements and benchmarks multiple polynomial multiplication algori
 
 ---
 
-## Prerequisites
+## 🛠️ Prerequisites
 
 ### On macOS
 ```bash
@@ -46,20 +46,20 @@ apt install build-essential libgmp-dev libmpfr-dev
     3. **Outputs include results, execution times, and accuracy comparison vs MPFR.**
 
 
-# Build and Run
+# 🏗️ Build and Run
 ```bash
 make
 ./make.exe
 ```
 > ⚠️ Note: **.exe** is just the executable name; it runs on Unix-based systems as well.
 
-# Clean (Optional)
+# 🧹 Clean (Optional)
 ```bash
 make clean
 ```
 
 
-# Output
+# 📈 Output
 The program prints:
 1. Input polynomials
 2. Multiplication results for all algorithms
@@ -67,7 +67,7 @@ The program prints:
 4. Maximum absolute error vs MPFR (for accuracy evaluation)
 5. Best k parameter determined from timing benchmarks   
 
-# Purpose
+# 🎯 Purpose
 This project allows you to:
 1. Compare efficiency of polynomial multiplication algorithms.
 2. Evaluate accuracy of double-precision vs. high-precision (MPFR) calculations.
@@ -75,7 +75,7 @@ This project allows you to:
 4. Optimize recursive algorithms using parameter k tuning (Karatsuba, Toom-Cook, Toom-4).
 
 
-# Notes
+# 📌 Notes
 1. MPFR is slower but exact; use it for validation and benchmarking.
 2. Double-precision algorithms are fast but prone to rounding errors, especially for higher degrees.
 3. This setup allows for quantitative study of error accumulation in different algorithms.
