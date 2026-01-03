@@ -1,4 +1,7 @@
 #include "karatsuba.h"
+#include "naive.h"
+#include <stdlib.h>
+#include <string.h>
 
 void karatsuba_recursive(double* C, double* A, int n, double* B, int m, int k) {
     if (n <= k || m <= k) {
@@ -23,7 +26,7 @@ void karatsuba_recursive(double* C, double* A, int n, double* B, int m, int k) {
     if (n1 > 0) memcpy(A1, A + n0, n1 * sizeof(double));
     memcpy(B0, B, m0 * sizeof(double));
     if (m1 > 0) memcpy(B1, B + m0, m1 * sizeof(double));
-    
+
     int maxSum = n1 > n0 ? n1 : n0;
     if (m1 > m0) maxSum = m1 > maxSum ? m1 : maxSum;
 
