@@ -3,13 +3,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include "naive.h"
-
-typedef enum {
-    NAIVE_BASE = 0,
-    BASE_KARATSUBA = 1
-} base_algo;
+#include "base_algo.h"
 
 double* toom_4_polynomial_multiplication(
     double* A, int degA, 
