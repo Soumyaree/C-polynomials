@@ -48,12 +48,23 @@ static double* toom_4_wrapper(
     int k
 ) {
     return toom_4_polynomial_multiplication(
-        A, degA, B, degB, k, NAIVE_BASE
+        A, degA, 
+        B, degB, 
+        k, NAIVE_BASE
     );
+}
+static double* toom_cook_wrapper(
+    double* A, int degA, 
+    double* B, int degB, 
+    int k) {
+        return toom_cook_polynomial_multiplication(
+            A, degA, 
+            B, degB, 
+            k, NAIVE_BASE);
 }
 
 
-// Benchmark helpder
+// Benchmark helper
 
 static void benchmark_algorithm(
     const char *name,
