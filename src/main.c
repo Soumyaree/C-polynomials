@@ -169,6 +169,15 @@ static int main_demo(void) {
     // Karatsuba
     for (int k = 2; k <= 4; k++) {
         C = karatsuba_polynomial_multiplication(A, degA, B, degB, k);
+        printf("Karatsuba (k=%d) Result: ", k);
+        print_polynomial(C, degA + degB);
+        free(C);
+    }
+
+    // Toom-Cook
+    for (int k = 2; k <= 4; k++) {
+        C = toom_cook_wrapper(A, degA, B, degB, k);
+        printf("Toom-Cook (k=%d) Result: ", k);
         print_polynomial(C, degA + degB);
         free(C);
     }
