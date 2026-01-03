@@ -7,10 +7,13 @@
 #include "naive.h"
 
 typedef enum {
-    BASE_NAIVE = 0,
+    NAIVE_BASE = 0,
     BASE_KARATSUBA = 1
 } base_algo;
 
-double* toom_4_polynomial_multiplication(double* A, int degA, double* B, int degB, int k, base_algo base);
+double* toom_4_polynomial_multiplication(
+    double* A, int degA, 
+    double* B, int degB, 
+    int k, base_algo base);
 
 #endif
