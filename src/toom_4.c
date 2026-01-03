@@ -137,7 +137,7 @@ static void toom4_recursive(double* C, double* A, int n, double* B, int m, int k
     free(w0); free(w1); free(w2); free(w3); free(w4); free(w5); free(w6);
 }
 
-double* toom_4_polynomial_multiplication(double* A, int degA, double* B, int degB, int k) {
+double* toom_4_polynomial_multiplication(double* A, int degA, double* B, int degB, int k, base_algo base) {
     int degC = degA + degB;
     double* C = (double*)calloc(degC + 1, sizeof(double));
     toom4_recursive(C, A, degA + 1, B, degB + 1, k);
