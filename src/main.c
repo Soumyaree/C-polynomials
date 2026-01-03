@@ -103,29 +103,36 @@ static int main_benchmark(void) {
         double *A = random_polynomial(deg);
         double *B = random_polynomial(deg);
 
+        // Compute MPFR reference result
         mpfr_t *mpfr_ref = mpfr_reference(A, deg, B, deg, precision);
 
         printf("Degree %d\n", deg);
         printf("--------------------------------------------\n");
 
+        // Naive
         benchmark_algorithm("Naive",
             naive_polynomial_multiplication, A, B, deg, 0, mpfr_ref);
 
+        // Karatsuba
         for (int k = 2; k <= 4; k++)
             benchmark_algorithm("Karatsuba",
                 karatsuba_polynomial_multiplication, A, B, deg, k, mpfr_ref);
 
+        // Toom-Cook
         for (int k = 2; k <= 4; k++)
             benchmark_algorithm("Toom-Cook",
                 toom_cook_wrapper, A, B, deg, k, mpfr_ref);
 
+        // Toom-4
         for (int k = 2; k <= 4; k++)
             benchmark_algorithm("Toom-4",
                 toom_4_wrapper, A, B, deg, k, mpfr_ref);
 
+        // Cleanup MPFR
         for (int j = 0; j <= 2 * deg; j++)
             mpfr_clear(mpfr_ref[j]);
         free(mpfr_ref);
+
         free(A);
         free(B);
 
@@ -135,7 +142,7 @@ static int main_benchmark(void) {
     return 0;
 }
 
-// to run as demo mode
+// demo mode
 
 static int main_demo(void) {
     printf("MODEL Project – Demo Mode\n\n");
@@ -152,16 +159,19 @@ static int main_demo(void) {
 
     double *C;
 
+    // Naive
     C = naive_polynomial_multiplication(A, degA, B, degB, 0);
     print_polynomial(C, degA + degB);
     free(C);
 
+    // Karatsuba
     for (int k = 2; k <= 4; k++) {
         C = karatsuba_polynomial_multiplication(A, degA, B, degB, k);
         print_polynomial(C, degA + degB);
         free(C);
     }
 
+    // Toom-4
     for (int k = 2; k <= 4; k++) {
         C = toom_4_wrapper(A, degA, B, degB, k);
         print_polynomial(C, degA + degB);
