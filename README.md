@@ -37,6 +37,7 @@ apt install build-essential libgmp-dev libmpfr-dev
     1. Execution time is measured for each algorithm.
     2. Karatsuba, Toom-Cook, and Toom-4 allow adjusting the k parameter to optimize performance, and allow to change the base-case to analyse the differences.
     3. Outputs include results, execution times, and accuracy comparison vs MPFR.
+
 ⚠️ Special feature: The benchmarks for the Karatsuba, Toom-Cook, and Toom4 algorithms take time to run. For this reason, we have placed them in separate files named bench_karatsuba.c, bench_ToomCook.c, and
 bench_Toom4.c. To avoid any problems when launching the main program, they have been commented out. All results are given in the report. If you want to run a benchmark, you need to comment out the main program and uncomment the desired benchmark.
 
