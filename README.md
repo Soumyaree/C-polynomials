@@ -1,8 +1,10 @@
 # MODEL Project – Polynomial Multiplication Benchmark (C)
 This project implements and benchmarks multiple polynomial multiplication algorithms in C, including classical and high-performance methods. It allows comparison of speed and accuracy for polynomials of various degrees. The naive double precision algorithm is used as a reference. 
+
 A report was written to analyze the algorithms, describe them in greater detail, their implementation choices, and the benchmark results.
 
 ## Algorithms covered
+This Project contains .h files for each algorithm and main.c as main driver file to run all those algorithms
 1. **Naive Classical Multiplication**  
 2. **Karatsuba Multiplication**  
 3. **Toom-Cook Multiplication**  
