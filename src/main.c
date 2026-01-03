@@ -2,13 +2,16 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <math.h>
 
 #include "naive.h"
 #include "karatsuba.h"
 #include "toom_cook.h"
 #include "toom_4.h"
-#include "mpfr_compare.h"
 #include "naive_mpfr.h"
+#include "mpfr_compare.h"
+
+// utility functions
 
 static double random_double(void) {
     return 2.0 * rand() / RAND_MAX - 1.0;
@@ -48,10 +51,7 @@ static void benchmark_algorithm(
 static int main_bench_original(void) {
     srand((unsigned)time(NULL));
 
-    /* MPFR reference precision */
     mpfr_prec_t precision = 256;
-
-    /* Polynomial degrees to test */
     int degrees[] = {8, 16, 32, 64};
     int num_degrees = sizeof(degrees) / sizeof(degrees[0]);
 
@@ -61,11 +61,9 @@ static int main_bench_original(void) {
     for (int i = 0; i < num_degrees; i++) {
         int deg = degrees[i];
 
-        /* Generate random polynomials */
         double *A = random_polynomial(deg);
         double *B = random_polynomial(deg);
 
-        /* Computing MPFR reference once */
         mpfr_t *mpfr_ref = mpfr_reference(A, deg, B, deg, precision);
 
         printf("Degree %d\n", deg);
@@ -175,7 +173,6 @@ static int main_demo_original(void) {
     run_algorithm(A, degA, B, degB, naive_polynomial_multiplication, "Naive Polynomial Multiplication", 0);
 
 
-    // Karatsuba Polynomial Multiplication
     for (int k = 2; k <= 4; k++) {
         run_algorithm(A, degA, B, degB, karatsuba_polynomial_multiplication, "Karatsuba Polynomial Multiplication", k);
     }
@@ -217,6 +214,8 @@ static int main_demo_original(void) {
 
     return 0;
 }
+
+// entry_point.d
 
 int main(int argc, char **argv) {
     if (argc >= 2 && strcmp(argv[1], "demo") == 0) {
