@@ -6,6 +6,11 @@
 #include <string.h>
 #include "naive.h"
 
-double* toom_cook_polynomial_multiplication(double* A, int degA, double* B, int degB, int k);
+typedef enum {
+    BASE_NAIVE = 0,
+    BASE_KARATSUBA = 1
+} base_algo;
 
-#endif // TOOM_COOK_H
+double* toom_cook_polynomial_multiplication(double* A, int degA, double* B, int degB, int k, base_algo base);
+
+#endif
