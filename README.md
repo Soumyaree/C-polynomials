@@ -1,8 +1,11 @@
+![Commit](https://img.shields.io/badge/Polynomials-C-blue)
+
 # 🚀 MODEL Project – Polynomial Multiplication Benchmark (C)
 
 This project implements and benchmarks multiple polynomial multiplication algorithms in **C**, including classical and high-performance methods. It allows comparison of **speed and accuracy** for polynomials of various degrees and provides **MPFR-based high-precision results** as a reference.
 
 ---
+
 
 ## 📚 Algorithms Covered
 1. **Naive Classical Multiplication**  
@@ -79,4 +82,8 @@ This project allows you to:
 1. MPFR is slower but exact; use it for validation and benchmarking.
 2. Double-precision algorithms are fast but prone to rounding errors, especially for higher degrees.
 3. This setup allows for quantitative study of error accumulation in different algorithms.
+
+
+
+**Sources of [Icons](https://img.shields.io/) and github style emoji codes**
 
