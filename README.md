@@ -22,6 +22,11 @@ make
 ./make.exe
 ```
 
+# Run the project in demo mode
+```bash
+./make.exe demo
+```
+
 # Output
 The program prints:
 1. Input polynomials
