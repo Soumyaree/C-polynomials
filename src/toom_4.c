@@ -1,5 +1,6 @@
 #include "toom_4.h"
 #include "karatsuba.h"
+#include "base_algo.h"
 
 static void base_multiplication(double*C, double*A, int n, double*B, int m, int k, base_algo base) {
     if (base == BASE_KARATSUBA) {

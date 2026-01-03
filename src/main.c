@@ -5,6 +5,7 @@
 #include <math.h>
 
 #include "naive.h"
+#include "base_algo.h"
 #include "karatsuba.h"
 #include "toom_cook.h"
 #include "toom_4.h"
