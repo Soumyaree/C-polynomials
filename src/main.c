@@ -162,6 +162,7 @@ static int main_demo(void) {
 
     // Naive
     C = naive_polynomial_multiplication(A, degA, B, degB, 0);
+    printf("Naive Result: ");
     print_polynomial(C, degA + degB);
     free(C);
 
