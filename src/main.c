@@ -190,6 +190,17 @@ static int main_demo(void) {
         free(C);
     }
 
+    // MPFR Reference
+    mpfr_prec_t precision = 256;
+    mpfr_t *mpfr_A = init_mpfr_polynomial(degA, A, precision);
+    mpfr_t *mpfr_B = init_mpfr_polynomial(degB, B, precision);
+    mpfr_t *mpfr_C = naive_mpfr_multiplication(mpfr_A, degA + 1, mpfr_B, degB + 1);
+
+    printf("MPFR Result: ");
+    print_mpfr_polynomial(mpfr_C, degA + degB);
+
+    free_mpfr_polynomials(mpfr_A, degA, mpfr_B, degB, mpfr_C, degA + degB);
+
     return 0;
 }
 
