@@ -1,12 +1,22 @@
 #include "toom_cook.h"
+#include "karatsuba.h"
 
-static void toom3_recursive(double* C, double* A, int n, double* B, int m, int k) {
+static void base_multiplication(double*C, double*A, int n, double*B, int m, int k, base_algo base) {
+    if (base == BASE_KARATSUBA) {
+        const int Kk=16;
+        karatsuba_recursive(C, A, n, B, m, Kk);
+    } else {
+        naive_multiplication(C, A, n, B, m);
+    }
+}
+
+static void toom3_recursive(double* C, double* A, int n, double* B, int m, int k, base_algo base) {
     // Base case
     if (n <= k || m <= k || n < 3 || m < 3) {
-        naive_multiplication(C, A, n, B, m);
+        base_multiplication(C, A, n, B, m, k, base);
         return;
     }
-    
+
     // Split each polynomial into 3 parts
     int size = n > m ? n : m;
     int third = (size + 2) / 3;
@@ -62,11 +72,11 @@ static void toom3_recursive(double* C, double* A, int n, double* B, int m, int k
     double* rm2 = (double*)calloc(rsize, sizeof(double));
     double* rinf = (double*)calloc(rsize, sizeof(double));
 
-    toom3_recursive(r0, p0, third, q0, third, k);
-    toom3_recursive(r1, p1, third, q1, third, k);
-    toom3_recursive(rm1, pm1, third, qm1, third, k);
-    toom3_recursive(rm2, pm2, third, qm2, third, k);
-    toom3_recursive(rinf, pinf, third, qinf, third, k);
+    toom3_recursive(r0, p0, third, q0, third, k, base);
+    toom3_recursive(r1, p1, third, q1, third, k, base);
+    toom3_recursive(rm1, pm1, third, qm1, third, k, base);
+    toom3_recursive(rm2, pm2, third, qm2, third, k, base);
+    toom3_recursive(rinf, pinf, third, qinf, third, k, base);
 
     double* w0 = (double*)calloc(rsize, sizeof(double));
     double* w1 = (double*)calloc(rsize, sizeof(double));
@@ -113,9 +123,9 @@ static void toom3_recursive(double* C, double* A, int n, double* B, int m, int k
     free(w0); free(w1); free(w2); free(w3); free(w4);
 }
 
-double* toom_cook_polynomial_multiplication(double* A, int degA, double* B, int degB, int k) {
+double* toom_cook_polynomial_multiplication(double* A, int degA, double* B, int degB, int k, base_algo base) {
     int degC = degA + degB;
     double* C = (double*)calloc(degC + 1, sizeof(double));
-    toom3_recursive(C, A, degA + 1, B, degB + 1, k);
+    toom3_recursive(C, A, degA + 1, B, degB + 1, k, base);
     return C;
 }
