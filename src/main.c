@@ -28,6 +28,32 @@ static double *random_polynomial(int degree) {
     return p;
 }
 
+static void print_polynomial(double *poly, int degree) {
+    for (int i = degree; i >= 0; i--) {
+        if (poly[i] != 1 || i == 0)
+            poly[i] != (int)poly[i] ? printf("%.2f", poly[i]) : printf("%.0f", poly[i]);
+        if (i > 1) printf("x^%d", i);
+        else if (i == 1) printf("x");
+        if (i > 0) printf(" + ");
+    }
+    printf("\n");
+}
+
+/* Toom-4 wrapper
+(FIX for function pointer mismatch) */
+
+static double* toom_4_wrapper(
+    double* A, int degA,
+    double* B, int degB,
+    int k
+) {
+    return toom_4_polynomial_multiplication(
+        A, degA, B, degB, k, NAIVE_BASE
+    );
+}
+
+
+// Benchmark helpder
 
 static void benchmark_algorithm(
     const char *name,
