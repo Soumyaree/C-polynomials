@@ -1,9 +1,19 @@
 #include "toom_4.h"
+#include "karatsuba.h"
 
-static void toom4_recursive(double* C, double* A, int n, double* B, int m, int k) {
+static void base_multiplication(double*C, double*A, int n, double*B, int m, int k, base_algo base) {
+    if (base == BASE_KARATSUBA) {
+        const int Kk=16;
+        karatsuba_recursive(C, A, n, B, m, Kk);
+    } else {
+        naive_multiplication(C, A, n, B, m);
+    }
+}
+
+static void toom4_recursive(double* C, double* A, int n, double* B, int m, int k, base_algo base) {
     // Base case
     if (n <= k || m <= k || n < 4 || m < 4) {
-        naive_multiplication(C, A, n, B, m);
+        base_multiplication(C, A, n, B, m, k, base);
         return;
     }
 
@@ -26,14 +36,14 @@ static void toom4_recursive(double* C, double* A, int n, double* B, int m, int k
     double* b1 = Bp + quarter;
     double* b2 = Bp + 2 * quarter;
     double* b3 = Bp + 3 * quarter;
-    
+
     double* p0 = (double*)calloc(quarter, sizeof(double));      // p(0) = a0
     double* p1 = (double*)calloc(quarter, sizeof(double));      // p(1) = a0 + a1 + a2 + a3
     double* pm1 = (double*)calloc(quarter, sizeof(double));     // p(-1) = a0 - a1 + a2 - a3
     double* p2 = (double*)calloc(quarter, sizeof(double));      // p(2) = a0 + 2a1 + 4a2 + 8a3
     double* pm2 = (double*)calloc(quarter, sizeof(double));     // p(-2) = a0 - 2a1 + 4a2 - 8a3
-    double* phalf = (double*)calloc(quarter, sizeof(double));   
-    double* pinf = (double*)calloc(quarter, sizeof(double));    
+    double* phalf = (double*)calloc(quarter, sizeof(double));
+    double* pinf = (double*)calloc(quarter, sizeof(double));
 
     double* q0 = (double*)calloc(quarter, sizeof(double));
     double* q1 = (double*)calloc(quarter, sizeof(double));
@@ -70,13 +80,13 @@ static void toom4_recursive(double* C, double* A, int n, double* B, int m, int k
     double* rhalf = (double*)calloc(rsize, sizeof(double));
     double* rinf = (double*)calloc(rsize, sizeof(double));
 
-    toom4_recursive(r0, p0, quarter, q0, quarter, k);
-    toom4_recursive(r1, p1, quarter, q1, quarter, k);
-    toom4_recursive(rm1, pm1, quarter, qm1, quarter, k);
-    toom4_recursive(r2, p2, quarter, q2, quarter, k);
-    toom4_recursive(rm2, pm2, quarter, qm2, quarter, k);
-    toom4_recursive(rhalf, phalf, quarter, qhalf, quarter, k);
-    toom4_recursive(rinf, pinf, quarter, qinf, quarter, k);
+    toom4_recursive(r0, p0, quarter, q0, quarter, k, base);
+    toom4_recursive(r1, p1, quarter, q1, quarter, k, base);
+    toom4_recursive(rm1, pm1, quarter, qm1, quarter, k, base);
+    toom4_recursive(r2, p2, quarter, q2, quarter, k, base);
+    toom4_recursive(rm2, pm2, quarter, qm2, quarter, k, base);
+    toom4_recursive(rhalf, phalf, quarter, qhalf, quarter, k, base);
+    toom4_recursive(rinf, pinf, quarter, qinf, quarter, k, base);
 
     double* w0 = (double*)calloc(rsize, sizeof(double));
     double* w1 = (double*)calloc(rsize, sizeof(double));
@@ -140,6 +150,6 @@ static void toom4_recursive(double* C, double* A, int n, double* B, int m, int k
 double* toom_4_polynomial_multiplication(double* A, int degA, double* B, int degB, int k, base_algo base) {
     int degC = degA + degB;
     double* C = (double*)calloc(degC + 1, sizeof(double));
-    toom4_recursive(C, A, degA + 1, B, degB + 1, k);
+    toom4_recursive(C, A, degA + 1, B, degB + 1, k, base);
     return C;
 }
