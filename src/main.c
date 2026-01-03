@@ -117,7 +117,7 @@ static int main_benchmark(void) {
 
         for (int k = 2; k <= 4; k++)
             benchmark_algorithm("Toom-Cook",
-                toom_cook_polynomial_multiplication, A, B, deg, k, mpfr_ref);
+                toom_cook_wrapper, A, B, deg, k, mpfr_ref);
 
         for (int k = 2; k <= 4; k++)
             benchmark_algorithm("Toom-4",
