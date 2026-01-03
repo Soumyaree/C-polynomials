@@ -185,6 +185,7 @@ static int main_demo(void) {
     // Toom-4
     for (int k = 2; k <= 4; k++) {
         C = toom_4_wrapper(A, degA, B, degB, k);
+        printf("Toom-4 (k=%d) Result: ", k);
         print_polynomial(C, degA + degB);
         free(C);
     }
