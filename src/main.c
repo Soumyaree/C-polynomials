@@ -137,8 +137,8 @@ static int main_demo(void) {
 // entry_point.d
 
 int main(int argc, char **argv) {
-    if (argc >= 2 && strcmp(argv[1], "demo") == 0) {
-            return main_demo_original();
-    }
-    return main_bench_original();
+    if (argc >= 2 && strcmp(argv[1], "demo") == 0)
+        return main_demo();
+
+    return main_benchmark();
 }
