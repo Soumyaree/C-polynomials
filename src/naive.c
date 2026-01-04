@@ -1,3 +1,5 @@
+//Soumyasree Chakraborty
+
 #include "naive.h"
 
 void naive_multiplication(double* C, double* A, int n, double* B, int m) {
