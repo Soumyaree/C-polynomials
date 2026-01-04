@@ -64,7 +64,6 @@ static double* toom_cook_wrapper(
             k, NAIVE_BASE);
 }
 
-
 // Benchmark helper
 
 static void benchmark_algorithm(
@@ -94,6 +93,7 @@ static int main_benchmark(void) {
     mpfr_prec_t precision = 256;
     int degrees[] = {8, 16, 32, 64};
     int num_degrees = sizeof(degrees) / sizeof(degrees[0]);
+
 
     printf("\nPolynomial Multiplication Benchmark\n");
     printf("MPFR reference precision: %lu bits\n\n", precision);
