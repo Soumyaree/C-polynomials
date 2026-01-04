@@ -53,10 +53,15 @@ apt install build-essential libgmp-dev libmpfr-dev
 
 # 🏗️ Build and Run
 ```bash
+# To run the full project from the bash script
+chmod +x run.sh # this makes the bash file executable, use sudo if required
+./run.sh
+# or create the project manually
 make
 ./make.exe
 ```
 > ⚠️ Note: **.exe** is just the executable name; it runs on Unix-based systems as well.
+
 
 # 🧹 Clean (Optional)
 ```bash
@@ -74,6 +79,7 @@ make clean
 ```bash
 ./main.exe demo
 ```
+
 ## Displays:
 1. Input polynomials
 2. Results from each algorithm
@@ -90,6 +96,7 @@ gcc src/bench_karatsuba.c ... -o bench_karatsuba.exe
 gcc src/bench_toom_cook.c ... -o bench_toom_cook.exe
 gcc src/bench_toom4.c ... -o bench_toom4.exe
 ```
+
 ## Jenkins Integration
 1. Jenkins Pipeline Steps
 2. Checkout source
@@ -97,11 +104,6 @@ gcc src/bench_toom4.c ... -o bench_toom4.exe
 4. Run demo mode
 5. Run benchmark mode
 6. Archive logs as artifacts
-
-## Or run the bash script from the terminal via
-```shell
-./run.sh
-```
 
 ***These benchmarks:***
 1. Explore optimal k values
