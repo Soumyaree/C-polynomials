@@ -150,5 +150,5 @@ This project allows you to:
 **Sources of [Icons](https://img.shields.io/) and github style emoji codes**
 
 ## :pencil2: Readme authors
-**Soumyasree Chakraorty**
+**Soumyasree Chakraorty**<br>
 **Auriane Chevalier**
