@@ -8,7 +8,6 @@
 void naive_multiplication(double* C, double* A, int n, double* B, int m);
 double* toom_4_polynomial_multiplication(double* A, int degA, double* B, int degB, int k, base_algo base);
 
-
 static inline double now_seconds(void) {
 #if defined(_WIN32) || defined(_WIN64)
    return (double)clock() / (double)CLOCKS_PER_SEC;
@@ -54,18 +53,18 @@ static void bench_k_for_size(int N, const int* ks, int nbk, int R) {
    for (int idx = 0; idx < nbk; idx++) {
        int k = ks[idx];
 
-       double* Cw = toom_4_polynomial_multiplication(A, degA, B, degB, k, BASE_NAIVE);
+       double* Cw = toom_4_polynomial_multiplication(A, degA, B, degB, k, NAIVE_BASE);
        free(Cw);
 
        double t0 = now_seconds();
        for (int r = 0; r < R; r++) {
-           double* C = toom_4_polynomial_multiplication(A, degA, B, degB, k, BASE_NAIVE);
+           double* C = toom_4_polynomial_multiplication(A, degA, B, degB, k, NAIVE_BASE);
            free(C);
        }
        double t1 = now_seconds();
        double avg_ms = 1000.0 * (t1 - t0) / (double)R;
 
-       double* Ccheck = toom_4_polynomial_multiplication(A, degA, B, degB, k, BASE_NAIVE);
+       double* Ccheck = toom_4_polynomial_multiplication(A, degA, B, degB, k, NAIVE_BASE);
        int ok = almost_equal_poly(Ccheck, Cref, sizeC, 1e-7);
        free(Ccheck);
 
@@ -103,7 +102,7 @@ static void correctness_tests(void) {
                fill_random(B, N);
                memset(Cref, 0, sizeC * sizeof(double));
                naive_multiplication(Cref, A, N, B, N);
-               double* C = toom_4_polynomial_multiplication(A, degA, B, degB, k, BASE_NAIVE);
+               double* C = toom_4_polynomial_multiplication(A, degA, B, degB, k, NAIVE_BASE);
                if (!almost_equal_poly(C, Cref, sizeC, 1e-7)) {
                    printf("ERROR: N=%d, k=%d\n", N, k);
                    free(C);
@@ -141,7 +140,7 @@ static void base_case (int k, int min_deg, int max_deg, int step_deg, int repeti
        fill_random(B,m);
 
        double average_time[2]={0.0, 0.0};
-       for (int base = BASE_NAIVE; base <= BASE_KARATSUBA; base++) {
+       for (int base = NAIVE_BASE; base <= BASE_KARATSUBA; base++) {
                double *Cw = toom_4_polynomial_multiplication(A, deg, B, deg, k, (base_algo)base);
                free(Cw);
 
@@ -154,8 +153,8 @@ static void base_case (int k, int min_deg, int max_deg, int step_deg, int repeti
                average_time[base] = 1000.0*(t1 - t0) / repetition;
 
        }
-       const char* winner = (average_time[BASE_NAIVE] <= average_time[BASE_KARATSUBA]) ? "naive" : "karatsuba";
-       printf("%d,%d,naive: %.9f, karatsuba: %.9f, winner : %s\n", deg, k, average_time[BASE_NAIVE], average_time[BASE_KARATSUBA], winner);
+       const char* winner = (average_time[NAIVE_BASE] <= average_time[BASE_KARATSUBA]) ? "naive" : "karatsuba";
+       printf("%d,%d,naive: %.9f, karatsuba: %.9f, winner : %s\n", deg, k, average_time[NAIVE_BASE], average_time[BASE_KARATSUBA], winner);
 
        free(A);
        free(B);
