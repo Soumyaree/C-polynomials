@@ -4,6 +4,8 @@
 
 This project implements and benchmarks multiple polynomial multiplication algorithms in **C**, including classical and high-performance methods. It allows comparison of **speed and accuracy** for polynomials of various degrees and provides **MPFR-based high-precision results** as a reference.
 
+This project is also builded and tested multiple times in jenkins which executes demo mode, benchmark mode, and CI execution with Jenkins.
+
 ---
 
 
@@ -61,14 +63,65 @@ make
 make clean
 ```
 
+## This builds:
+`main.exe` \
+***(Bench executables are built separately when needed)***
 
-# 📈 Output
-The program prints:
+# ▶️ Running the Program
+
+## 1. Demo Mode (human-readable output)
+
+```bash
+./main.exe demo
+```
+## Displays:
 1. Input polynomials
-2. Multiplication results for all algorithms
-3. Execution time for each algorithm
-4. Maximum absolute error vs MPFR (for accuracy evaluation)
-5. Best k parameter determined from timing benchmarks   
+2. Results from each algorithm
+
+## 2. Benchmark Mode (default)
+```bash
+./main.exe
+```
+
+# 🧪 Dedicated Benchmarks
+**Each advanced algorithm has its own benchmark program:**
+```shell
+gcc src/bench_karatsuba.c ... -o bench_karatsuba.exe
+gcc src/bench_toom_cook.c ... -o bench_toom_cook.exe
+gcc src/bench_toom4.c ... -o bench_toom4.exe
+```
+## Jenkins Integration
+1. Jenkins Pipeline Steps
+2. Checkout source
+3. Build using Makefile
+4. Run demo mode
+5. Run benchmark mode
+6. Archive logs as artifacts
+
+## Or run the bash script from the terminal via
+```shell
+./run.sh
+```
+
+***These benchmarks:***
+1. Explore optimal k values
+2. Compare base cases (naive vs karatsuba)
+3. Output timing data (CSV-friendly)
+
+## Outputs:
+1. Execution time per algorithm
+2. Numerical error vs MPFR reference
+3. Results for increasing polynomial degrees
+
+# 🔬 Numerical Accuracy
+1. Coefficients are random doubles in [-1, 1]
+2. MPFR precision: 256 bits
+3. Error metric: maximum absolute error
+4. MPFR results are considered exact
+5. As polynomial degree increases:
+6. Double-precision errors grow slightly
+7. Recursive algorithms (Karatsuba, Toom) accumulate rounding errors
+8. MPFR remains perfectly stable
 
 # 🎯 Purpose
 This project allows you to:
@@ -84,6 +137,12 @@ This project allows you to:
 3. This setup allows for quantitative study of error accumulation in different algorithms.
 
 
+
+# References
+***Go the links to find the reffs :*** \
+[Polynomial multiplication](https://en.wikipedia.org/wiki/Polynomial_multiplication) \
+[IEEE 754 floating-point](https://en.wikipedia.org/wiki/IEEE_754) \
+[MPFR library](https://www.mpfr.org/) 
 
 **Sources of [Icons](https://img.shields.io/) and github style emoji codes**
 
