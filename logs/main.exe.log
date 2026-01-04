@@ -1,0 +1,56 @@
+
+Polynomial Multiplication Benchmark
+MPFR reference precision: 256 bits
+
+Degree 8
+--------------------------------------------
+Naive        (k=0) | time = 0.000004 s | max error = 1.013e+00
+Karatsuba    (k=2) | time = 0.000016 s | max error = 8.882e-16
+Karatsuba    (k=3) | time = 0.000008 s | max error = 4.441e-16
+Karatsuba    (k=4) | time = 0.000005 s | max error = 4.441e-16
+Toom-Cook    (k=2) | time = 0.000022 s | max error = 1.332e-15
+Toom-Cook    (k=3) | time = 0.000004 s | max error = 1.110e-15
+Toom-Cook    (k=4) | time = 0.000003 s | max error = 1.110e-15
+Toom-4       (k=2) | time = 0.000007 s | max error = 4.788e-16
+Toom-4       (k=3) | time = 0.000005 s | max error = 4.788e-16
+Toom-4       (k=4) | time = 0.000005 s | max error = 4.788e-16
+
+Degree 16
+--------------------------------------------
+Naive        (k=0) | time = 0.000001 s | max error = 4.317e-01
+Karatsuba    (k=2) | time = 0.000032 s | max error = 6.661e-16
+Karatsuba    (k=3) | time = 0.000018 s | max error = 8.882e-16
+Karatsuba    (k=4) | time = 0.000018 s | max error = 8.882e-16
+Toom-Cook    (k=2) | time = 0.000032 s | max error = 1.887e-15
+Toom-Cook    (k=3) | time = 0.000019 s | max error = 1.887e-15
+Toom-Cook    (k=4) | time = 0.000027 s | max error = 1.887e-15
+Toom-4       (k=2) | time = 0.000031 s | max error = 1.943e-15
+Toom-4       (k=3) | time = 0.000029 s | max error = 1.943e-15
+Toom-4       (k=4) | time = 0.000022 s | max error = 1.943e-15
+
+Degree 32
+--------------------------------------------
+Naive        (k=0) | time = 0.000001 s | max error = 1.225e+00
+Karatsuba    (k=2) | time = 0.000056 s | max error = 4.996e-15
+Karatsuba    (k=3) | time = 0.000043 s | max error = 2.776e-15
+Karatsuba    (k=4) | time = 0.000022 s | max error = 1.221e-15
+Toom-Cook    (k=2) | time = 0.000070 s | max error = 5.995e-15
+Toom-Cook    (k=3) | time = 0.000070 s | max error = 5.995e-15
+Toom-Cook    (k=4) | time = 0.000022 s | max error = 3.830e-15
+Toom-4       (k=2) | time = 0.000037 s | max error = 3.553e-15
+Toom-4       (k=3) | time = 0.000028 s | max error = 3.553e-15
+Toom-4       (k=4) | time = 0.000026 s | max error = 3.553e-15
+
+Degree 64
+--------------------------------------------
+Naive        (k=0) | time = 0.000004 s | max error = 1.406e+00
+Karatsuba    (k=2) | time = 0.000153 s | max error = 5.329e-15
+Karatsuba    (k=3) | time = 0.000111 s | max error = 3.109e-15
+Karatsuba    (k=4) | time = 0.000057 s | max error = 1.998e-15
+Toom-Cook    (k=2) | time = 0.000277 s | max error = 9.326e-15
+Toom-Cook    (k=3) | time = 0.000074 s | max error = 7.105e-15
+Toom-Cook    (k=4) | time = 0.000063 s | max error = 7.105e-15
+Toom-4       (k=2) | time = 0.000152 s | max error = 2.154e-14
+Toom-4       (k=3) | time = 0.000142 s | max error = 2.154e-14
+Toom-4       (k=4) | time = 0.000138 s | max error = 2.154e-14
+

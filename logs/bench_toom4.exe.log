@@ -1,0 +1,76 @@
+=== Correctness test ===
+Correct for N = 16
+Correct for N = 32
+Correct for N = 64
+Correct for N = 128
+Correct for N = 256
+Correctness tests finished
+
+N=256
+k,time_avg_ms
+4,0.086655
+8,0.070335
+16,0.014565
+32,0.013910
+64,0.007155
+128,0.007075
+
+N=512
+k,time_avg_ms
+4,0.317895
+8,0.057685
+16,0.057975
+32,0.020040
+64,0.019910
+128,0.019755
+
+N=1024
+k,time_avg_ms
+4,0.366460
+8,0.365210
+16,0.086730
+32,0.086750
+64,0.046415
+128,0.046315
+
+N=2048
+k,time_avg_ms
+4,2.225190
+8,0.422815
+16,0.416975
+32,0.149690
+64,0.150085
+128,0.148505
+
+N=4096
+k,time_avg_ms
+4,2.598755
+8,2.602730
+16,0.642675
+32,0.637955
+64,0.354525
+128,0.354150
+
+N=8192
+k,time_avg_ms
+4,15.452955
+8,3.007915
+16,3.049345
+32,1.139735
+64,1.127220
+128,1.126345
+
+deg,k,time_naive, time_karatsuba, winner
+64,64,naive: 0.001618500, karatsuba: 0.003352500, winner : naive
+80,64,naive: 0.001911000, karatsuba: 0.003812500, winner : naive
+96,64,naive: 0.002097000, karatsuba: 0.004464500, winner : naive
+112,64,naive: 0.002422000, karatsuba: 0.005142000, winner : naive
+128,64,naive: 0.002683500, karatsuba: 0.008817500, winner : naive
+144,64,naive: 0.003024000, karatsuba: 0.010660500, winner : naive
+160,64,naive: 0.003633000, karatsuba: 0.012282500, winner : naive
+176,64,naive: 0.004359500, karatsuba: 0.012440000, winner : naive
+192,64,naive: 0.004021000, karatsuba: 0.014163000, winner : naive
+208,64,naive: 0.004577500, karatsuba: 0.014697500, winner : naive
+224,64,naive: 0.004937500, karatsuba: 0.016439000, winner : naive
+240,64,naive: 0.005609000, karatsuba: 0.015861000, winner : naive
+256,64,naive: 0.012721000, karatsuba: 0.025420500, winner : naive
