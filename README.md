@@ -139,7 +139,6 @@ This project allows you to:
 3. This setup allows for quantitative study of error accumulation in different algorithms.
 
 
-
 # References
 ***Go the links to find the reffs :*** \
 [Polynomial multiplication](https://en.wikipedia.org/wiki/Polynomial_multiplication) \
