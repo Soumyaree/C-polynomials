@@ -139,6 +139,8 @@ This project allows you to:
 3. This setup allows for quantitative study of error accumulation in different algorithms.
 
 
+## :octocat: ========Find this project here: [![comit](https://img.shields.io/badge/GitHub-blue)](https://github.com/Soumyaree/C-polynomials)==========
+
 # References
 ***Go the links to find the reffs :*** \
 [Polynomial multiplication](https://en.wikipedia.org/wiki/Polynomial_multiplication) \
