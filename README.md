@@ -22,7 +22,7 @@ This project is also builded and tested multiple times in jenkins which executes
 
 ## 🛠️ Prerequisites
 
-### On macOS
+### :computer: On macOS
 ```bash
 brew install gcc gmp mpfr
 ```
@@ -149,3 +149,6 @@ This project allows you to:
 
 **Sources of [Icons](https://img.shields.io/) and github style emoji codes**
 
+## :pencil2: Readme authors
+**Soumyasree Chakraorty**
+**Auriane Chevalier**
