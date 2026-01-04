@@ -1,3 +1,6 @@
+//Auriane Chevalier
+//Abdullah Sheikh
+
 #include "toom_cook.h"
 #include "karatsuba.h"
 #include "base_algo.h"
