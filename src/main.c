@@ -71,7 +71,8 @@ static void benchmark_algorithm(
     double *(*func)(double *, int, double *, int, int),
     double *A, double *B,
     int degree, int k,
-    mpfr_t *mpfr_ref
+    mpfr_t *mpfr_ref,
+    int print_result
 ) {
     clock_t start = clock();
     double *C = func(A, degree, B, degree, k);
@@ -79,9 +80,22 @@ static void benchmark_algorithm(
 
     double time_sec = (double)(end - start) / CLOCKS_PER_SEC;
     double error = max_absolute_error(C, mpfr_ref, 2 * degree);
+    if (print_result) {
+        printf("--------------------------------------------------\n");
+        printf("Algorithm: %s (k=%d)\n\n", name, k);
 
-    printf("%-12s (k=%d) | time = %.6f s | max error = %.3e\n", name, k, time_sec, error);
+        printf("Result polynomial:\n");
+        print_polynomial(C, 2 * degree);
 
+        printf("\nBenchmark:\n");
+        printf("Time      : %.6f s\n", time_sec);
+        printf("Max error : %.3e\n", error);
+
+        printf("--------------------------------------------------\n\n");
+    } else {
+        printf("%-12s (k=%d) | time = %.6f s | max error = %.3e\n",
+            name, k, time_sec, error);
+    }
     free(C);
 }
 
@@ -103,6 +117,12 @@ static int main_benchmark(void) {
 
         double *A = random_polynomial(deg);
         double *B = random_polynomial(deg);
+        double *C_naive = naive_polynomial_multiplication(A, deg, B, deg, 0);
+        
+        printf("-------------------Naive classical result (double precision):-------------------\n\n");
+        print_polynomial(C_naive, 2 * deg);
+        printf("\n");
+        printf("-------------------End of Naive classical result (double precision):-------------------\n\n");
 
         // Compute MPFR reference result
         mpfr_t *mpfr_ref = mpfr_reference(A, deg, B, deg, precision);
@@ -112,22 +132,22 @@ static int main_benchmark(void) {
 
         // Naive
         benchmark_algorithm("Naive",
-            naive_polynomial_multiplication, A, B, deg, 0, mpfr_ref);
+            naive_polynomial_multiplication, A, B, deg, 0, mpfr_ref, 1);
 
         // Karatsuba
         for (int k = 2; k <= 4; k++)
             benchmark_algorithm("Karatsuba",
-                karatsuba_polynomial_multiplication, A, B, deg, k, mpfr_ref);
+                karatsuba_polynomial_multiplication, A, B, deg, k, mpfr_ref, 0);
 
         // Toom-Cook
         for (int k = 2; k <= 4; k++)
             benchmark_algorithm("Toom-Cook",
-                toom_cook_wrapper, A, B, deg, k, mpfr_ref);
+                toom_cook_wrapper, A, B, deg, k, mpfr_ref, 0);
 
         // Toom-4
         for (int k = 2; k <= 4; k++)
             benchmark_algorithm("Toom-4",
-                toom_4_wrapper, A, B, deg, k, mpfr_ref);
+                toom_4_wrapper, A, B, deg, k, mpfr_ref, 0);
 
         // Cleanup MPFR
         for (int j = 0; j <= 2 * deg; j++)
@@ -136,6 +156,7 @@ static int main_benchmark(void) {
 
         free(A);
         free(B);
+        free(C_naive);
 
         printf("\n");
     }
