@@ -1,4 +1,4 @@
 gcc -O2 -I/opt/homebrew/include src/main.c src/naive.c src/karatsuba.c src/toom_cook.c src/toom_4.c src/naive_mpfr.c src/mpfr_compare.c -L/opt/homebrew/lib -lmpfr -lgmp -o main.exe
 gcc -O2 -I/opt/homebrew/include src/bench_karatsuba.c src/naive.c src/karatsuba.c src/toom_cook.c src/toom_4.c src/naive_mpfr.c src/mpfr_compare.c -L/opt/homebrew/lib -lmpfr -lgmp -o bench_karatsuba.exe
-gcc -O2 -I/opt/homebrew/include src/bench_toom_cook.c src/naive.c src/karatsuba.c src/toom_cook.c src/toom_4.c src/naive_mpfr.c src/mpfr_compare.c -L/opt/homebrew/lib -lmpfr -lgmp -o bench_toom_cook.exe
-gcc -O2 -I/opt/homebrew/include src/bench_toom4.c src/naive.c src/karatsuba.c src/toom_cook.c src/toom_4.c src/naive_mpfr.c src/mpfr_compare.c -L/opt/homebrew/lib -lmpfr -lgmp -o bench_toom4.exe
+gcc -O2 -I/opt/homebrew/include src/bench_Toom_Cook.c src/naive.c src/karatsuba.c src/toom_cook.c src/toom_4.c src/naive_mpfr.c src/mpfr_compare.c -L/opt/homebrew/lib -lmpfr -lgmp -o bench_toom_cook.exe
+gcc -O2 -I/opt/homebrew/include src/bench_Toom4.c src/naive.c src/karatsuba.c src/toom_cook.c src/toom_4.c src/naive_mpfr.c src/mpfr_compare.c -L/opt/homebrew/lib -lmpfr -lgmp -o bench_toom4.exe
